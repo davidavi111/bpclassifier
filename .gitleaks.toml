@@ -1,0 +1,15 @@
+# gitleaks config for bpclassifier
+# Extends gitleaks' default ruleset and adds project-specific allowlists.
+
+title = "bpclassifier gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Project-level allowlist"
+paths = [
+    # detect-secrets baseline stores SHA hashes of past detections,
+    # not real secrets. gitleaks misreads these as generic-api-key hits.
+    '''\.secrets\.baseline''',
+]

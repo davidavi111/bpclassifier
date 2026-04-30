@@ -1,0 +1,99 @@
+# =====================================================================
+# .gitignore — bpclassifier project
+# Inherits the spirit of David's global rules; adds project-specific
+# overrides via leading-! patterns near the bottom.
+# =====================================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Virtual environments / Conda ---
+.venv/
+venv/
+env/
+.conda/
+
+# --- Test / lint caches ---
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Notebook artifacts ---
+.ipynb_checkpoints/
+
+# --- Secrets (defense in depth; primary defense is OS env vars) ---
+.env
+.env.*
+*.env
+secrets.json
+credentials.json
+*.pem
+*.key
+*.p12
+*.pfx
+.secrets/
+*.credentials
+*.token
+
+# --- W&B local cache ---
+wandb/
+*.wandb
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+logs/
+*.sqlite
+*.db
+
+# --- Bulky data formats: ignore by default, override below ---
+*.csv
+*.tsv
+*.xlsx
+*.parquet
+*.pkl
+*.pickle
+*.h5
+*.npz
+*.feather
+
+# --- Cached / regenerable intermediates ---
+data/interim/
+data/raw/sentences.parquet
+data/raw/embeddings_*.parquet
+
+# --- Large model weights belong in W&B Artifacts, not git ---
+artifacts/*.pkl
+artifacts/*.pt
+artifacts/*.bin
+artifacts/*.safetensors
+artifacts/*.onnx
+
+# =====================================================================
+# OVERRIDES — files we DO commit despite the patterns above
+# =====================================================================
+
+# Gold-label set: small, immutable once frozen, critical for reproducibility
+!data/gold/*.parquet
+!data/gold/*.json
+!data/gold/*.md
+
+# Frozen split indices: tiny, must be reproducible
+!data/splits/*.json
+
+# Empty-directory placeholders
+!**/.gitkeep
+!artifacts/.gitkeep

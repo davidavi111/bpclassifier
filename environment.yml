@@ -1,0 +1,54 @@
+# =====================================================================
+# Conda environment for bpclassifier
+# Create with:
+#   conda env create -f environment.yml
+# Activate with:
+#   conda activate Boilerplate_Classifier
+# Then install the project itself in editable mode:
+#   pip install -e .
+# =====================================================================
+name: Boilerplate_Classifier
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      # --- Core NLP / ML ---
+      - scikit-learn>=1.4
+      - nltk>=3.8
+      - sentence-transformers>=2.7
+      - setfit>=1.0
+      - transformers>=4.40,<5.0  # pinned: setfit 1.1.x not compatible with transformers v5
+      - datasets>=2.18
+      - accelerate>=0.30
+      - torch>=2.2
+      - fasttext-wheel
+      # --- Data wrangling ---
+      - pandas>=2.2
+      - numpy>=1.26
+      - pyarrow>=15
+      # --- Visualization ---
+      - plotly>=5.20
+      - matplotlib>=3.8
+      - seaborn>=0.13
+      # --- GUI ---
+      - streamlit>=1.30
+      - gradio>=4.20
+      # --- W&B + tracking ---
+      - wandb>=0.17
+      - weave>=0.50
+      # --- LLM judge SDKs (optional at runtime; safe to install all) ---
+      - anthropic>=0.25
+      - openai>=1.20
+      - google-genai>=0.3
+      - ollama>=0.2
+      # --- Dev / quality ---
+      - pytest>=8.0
+      - pre-commit>=3.7
+      - detect-secrets>=1.5
+      - ruff>=0.4
+      - nbstripout>=0.7
+      # --- Notebooks ---
+      - ipykernel
+      - jupyterlab

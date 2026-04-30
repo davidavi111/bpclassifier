@@ -1,0 +1,57 @@
+# Pre-commit hooks for bpclassifier.
+# Install once with:  pre-commit install
+# Run manually with:  pre-commit run --all-files
+#
+# These run automatically before every `git commit` and reject the
+# commit if any hook fails.
+
+repos:
+  # --- General hygiene ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=5000"]
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+
+  # --- Secrets: PRIMARY defense at git layer ---
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+        exclude: "^(\\.secrets\\.baseline|tests/test_no_secrets_in_repo\\.py)$"
+
+  # --- Secrets: SECONDARY defense (different ruleset, catches what the first misses) ---
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+        # Use the project's gitleaks config which allowlists .secrets.baseline
+        # (it stores SHA hashes of past detections, which gitleaks misreads as keys).
+        args: ["--config=.gitleaks.toml"]
+
+  # --- Lint + format ---
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.10
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  # --- Strip notebook outputs (prevents accidental data leaks via cell output) ---
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+
+default_language_version:
+  python: python3.12

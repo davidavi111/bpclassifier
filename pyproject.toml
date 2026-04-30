@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bpclassifier"
+version = "0.1.0"
+description = "Boilerplate-vs-substantive sentence classifier for earnings-call transcripts."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "David" }]
+license = { text = "Proprietary - course assignment" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# --- Ruff: linter + formatter ---
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "scripts", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "I",   # isort
+  "W",   # pycodestyle warnings
+  "N",   # naming
+  "UP",  # pyupgrade
+  "B",   # bugbear
+  "S",   # flake8-bandit (security)
+]
+ignore = [
+  "E501",  # line length handled by formatter
+  "S101",  # asserts are fine in tests
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "S105", "S106"]  # allow test fixtures with dummy secrets
+
+# --- Pytest ---
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "smoke: tests that contact external services (W&B, etc.); skipped by default",
+]
+addopts = "-ra --strict-markers"

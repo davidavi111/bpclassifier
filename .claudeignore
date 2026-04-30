@@ -1,0 +1,38 @@
+# =====================================================================
+# .claudeignore — files Claude Code MUST NOT read
+# This is a HARD block enforced by Claude Code itself, distinct from
+# .gitignore (which controls git tracking).
+# =====================================================================
+
+# --- Secrets ---
+.env
+.env.*
+*.env
+secrets.json
+credentials.json
+secrets/
+.secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+*.credentials
+*.secret
+*.token
+auth.json
+
+# --- W&B local cache (may contain auth tokens) ---
+wandb/
+.wandb/
+
+# --- Cached LLM API responses (may contain raw judge calls / PII) ---
+data/interim/raw_judge_calls/
+data/interim/judge_outputs/
+
+# --- Local environment overrides ---
+.envrc
+local_settings.py
+
+# --- IDE-stored credentials ---
+.vscode/sftp.json
+.vscode/settings.json

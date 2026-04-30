@@ -1,0 +1,14 @@
+# Force LF line endings for cross-platform consistency.
+# Especially important on Windows + WSL + Linux Colab boxes.
+* text=auto eol=lf
+
+# Binary files: do not normalize
+*.parquet binary
+*.pkl binary
+*.pickle binary
+*.pt binary
+*.bin binary
+*.safetensors binary
+*.png binary
+*.jpg binary
+*.pdf binary
