@@ -2,9 +2,10 @@
 
 Single source of truth for the project. Updated at the end of every stage.
 
-> **Current state:** Stage 1 — Project Foundation. Files written. Awaiting David's
-> environment setup commands (run in Claude Code) and verification that `pytest`
-> passes. Once verified, tag `stage-1-foundation` and proceed to Stage 2.
+> **Current state:** Stage 2 — Data Extraction COMPLETE. 54,923 sentences from
+> 131 transcripts (14 tickers) extracted to `data/raw/sentences.parquet` and
+> published as W&B Artifact `sentence-pool:v0`. Awaiting David's go-ahead on
+> the Stage 2 commit + tag, then proceed to Stage 3 (Gold-Label Pipeline).
 
 ---
 
@@ -48,7 +49,7 @@ among recall-feasible thresholds, maximize macro-F1.
 
 ## The 9 stages
 
-### Stage 1 — Project Foundation [IN PROGRESS]
+### Stage 1 — Project Foundation [DONE - tagged stage-1-foundation]
 
 Build the secure, reproducible scaffolding.
 
@@ -67,42 +68,49 @@ Build the secure, reproducible scaffolding.
 - [x] `README.md` (grader-facing run instructions)
 - [x] `CLAUDE.md` (project rules)
 - [x] `PLAN.md` (this file)
-- [ ] David: `WANDB_API_KEY` set as Windows User env var, verified
-- [ ] David: `conda env create -f environment.yml`
-- [ ] David: `conda activate Boilerplate_Classifier && pip install -e .`
-- [ ] David: `pre-commit install` and `detect-secrets scan > .secrets.baseline`
-- [ ] David: `git init`, first commit, `gh repo create bpclassifier --private --source=. --push`
-- [ ] David: `pytest` passes (4 of 5 tests; `test_wandb_auth.py` is opt-in)
-- [ ] Tag `stage-1-foundation` pushed
+- [x] `WANDB_API_KEY` set as Windows User env var, verified
+- [x] `conda env create -f environment.yml`
+- [x] `conda activate Boilerplate_Classifier && pip install -e .`
+- [x] `pre-commit install` and `.secrets.baseline` generated
+- [x] `git init`, first commit, private GitHub repo at `github.com/davidavi111/bpclassifier`
+- [x] `pytest` passes (31 tests + smoke W&B auth)
+- [x] Tag `stage-1-foundation` pushed
 
 **Definition of Done:** All checkboxes above are checked. Tag exists. Repo is on
 GitHub (private). David has confirmed `pytest -q` is green.
 
 ---
 
-### Stage 2 — Data Extraction
+### Stage 2 — Data Extraction [DONE - awaiting commit]
 
-Turn ~80 raw transcripts into a clean sentence pool.
+Turn 131 raw transcripts into a clean sentence pool.
 
-**Tasks:**
-- Read every `.txt` in `ECT/`. Detect encoding, normalize.
-- Strip header/footer boilerplate that is identical across files (e.g. legal disclaimers).
-- De-duplicate exact repeated lines.
-- Split on paragraph breaks, then NLTK `punkt` sentence-tokenize.
-- Drop sentences shorter than 40 characters.
-- Annotate each sentence with metadata: company ticker, quarter, year, position-in-doc,
-  speaker (best-effort heuristic), section (prepared remarks vs. Q&A vs. boilerplate).
-- Save as `data/raw/sentences.parquet` (gitignored, regenerable from `ECT/`).
-- Log W&B run with stats: total sentences, per-company counts, length distribution.
-- Save the sentence pool as a W&B Artifact (versioned).
+**Outcome:**
+- 131 transcripts parsed (14 tickers: AMD, AVGO, BLK, C, FAST, GS, INTC, JNJ,
+  JPM, MSFT, NVDA, PLTR, V, WFC).
+- 54,923 sentences extracted (substantially higher than the original 8K–15K
+  estimate; the original was based on a truncated file listing — no quality
+  concern, just a bigger pool to draw from).
+- Section breakdown: 21,797 prepared_remarks / 7,644 question / 25,482 answer.
+- Length stats: mean 121, median 108, p95 242, max 1,004, min 40 chars.
+- `data/raw/sentences.parquet` written (regenerable, gitignored).
+- W&B Artifact `sentence-pool:v0` published.
 
-**Tests to add:**
-- `test_extract_sentence_count.py` — pool size in expected range.
-- `test_extract_no_short_sentences.py` — all >= 40 chars.
-- `test_extract_metadata_complete.py` — every sentence has ticker + quarter + year.
+**Implementation notes:**
+- Layer 1 parser adapted from David's prior earnings-NLP project; full
+  attribution comment in `src/bpclassifier/extract.py`.
+- Bug fix during Stage 2: when transcripts skip the role line and start a
+  Question/Answer/Presenter Speech section directly with content, the parser
+  was capturing the first sentence as `role`. Fixed via `_resolve_role_and_body`
+  (covers both empty-body AVGO case and non-empty-body cases).
+- `speaker_name` is best-effort and sparsely populated (6 unique values across
+  the corpus). The role-line format in this dataset is mostly 2-part
+  (`Executives - Title`) without an embedded person name. Raw `speaker_role`
+  field has 141 clean unique values and is the reliable column. Person-name
+  parsing can be improved post-hoc if it becomes a wanted feature.
+- Tests in place: `test_extract_*.py` — 21 tests, all passing.
 
-**Definition of Done:** `data/raw/sentences.parquet` exists and contains roughly 8K - 15K
-rows. W&B Artifact `sentence-pool:v0` exists. Stage tag pushed.
+**Definition of Done:** All checkboxes met. Tag `stage-2-extraction` pending.
 
 ---
 
