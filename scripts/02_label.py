@@ -44,6 +44,7 @@ from bpclassifier.label import (  # noqa: E402
     ANTHROPIC_COST_LIMIT_USD,
     ANTHROPIC_MODEL,
     CONCURRENCY,
+    COST_GUARD_WARMUP,
     DEEPSEEK_MODEL,
     LLAMA_MODEL,
     PROMPT_VERSION,
@@ -137,19 +138,33 @@ async def _call_anthropic(
         cost_tracker["total_usd"] += call_cost
         cost_tracker["calls"] += 1
 
-        # Project remaining spend and abort before the bill gets too large
-        remaining = cost_tracker["total_sentences"] - cost_tracker["calls"]
-        if remaining > 0 and cost_tracker["calls"] > 0:
-            avg_cost = cost_tracker["total_usd"] / cost_tracker["calls"]
-            projected = cost_tracker["total_usd"] + avg_cost * remaining
-            if projected > ANTHROPIC_COST_LIMIT_USD:
-                raise OSError(
-                    f"Projected Anthropic spend ${projected:.2f} exceeds the "
-                    f"${ANTHROPIC_COST_LIMIT_USD} limit. "
-                    f"Spent ${cost_tracker['total_usd']:.4f} over "
-                    f"{cost_tracker['calls']} calls. Aborting. "
-                    f"Set a higher limit or reduce sample size."
+        # Cost guard: log during warmup; project+abort only after COST_GUARD_WARMUP calls.
+        # Warmup defers projection until prompt-cache read economics dominate the average
+        # (cache_creation is ~12.5x pricier than cache_read, so the first 5 concurrent
+        # calls inflate the running average and would falsely trip the limit).
+        n = cost_tracker["calls"]
+        if n < COST_GUARD_WARMUP:
+            if n % 20 == 0 and n > 0:
+                log.info(
+                    "Anthropic warmup %d/%d, spent $%.4f "
+                    "(projection deferred until cache amortization stabilizes)",
+                    n,
+                    COST_GUARD_WARMUP,
+                    cost_tracker["total_usd"],
                 )
+        else:
+            remaining = cost_tracker["total_sentences"] - n
+            if remaining > 0:
+                avg_cost = cost_tracker["total_usd"] / n
+                projected = cost_tracker["total_usd"] + avg_cost * remaining
+                if projected > ANTHROPIC_COST_LIMIT_USD:
+                    raise OSError(
+                        f"Projected Anthropic spend ${projected:.2f} exceeds the "
+                        f"${ANTHROPIC_COST_LIMIT_USD} limit. "
+                        f"Spent ${cost_tracker['total_usd']:.4f} over "
+                        f"{n} calls. Aborting. "
+                        f"Set a higher limit or reduce sample size."
+                    )
 
         parsed = parse_json_response(raw)
         if parsed:

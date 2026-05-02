@@ -35,6 +35,7 @@ SONNET_OUT_PRICE: float = 15.00 / 1_000_000
 SONNET_CACHE_WRITE_PRICE: float = 3.75 / 1_000_000
 SONNET_CACHE_READ_PRICE: float = 0.30 / 1_000_000
 ANTHROPIC_COST_LIMIT_USD: float = 9.0
+COST_GUARD_WARMUP: int = 100  # calls before cost projection activates
 
 REQUIRED_OUTPUT_COLUMNS: list[str] = [
     "sentence_id",
