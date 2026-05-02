@@ -1,25 +1,20 @@
 # PLAN.md — bpclassifier master plan
 
-Single source of truth for the project. Updated at the end of every stage.
+Single source of truth for the project. Read first by Claude Code on every session.
 
-> **Current state:** Stage 2 — Data Extraction COMPLETE. 54,923 sentences from
-> 131 transcripts (14 tickers) extracted to `data/raw/sentences.parquet` and
-> published as W&B Artifact `sentence-pool:v0`. Awaiting David's go-ahead on
-> the Stage 2 commit + tag, then proceed to Stage 3 (Gold-Label Pipeline).
+> **Current state:** Stages 1 + 2 COMPLETE (tagged + pushed). All Stage 3–7
+> architectural decisions LOCKED. Stage 3 first execution step: rubric drafted
+> at `data/gold/rubric.md` — awaiting David's review and API-key setup, then
+> the labeling pipeline runs.
+> **Stages 8 (writeup) and 9 (submission) deferred — not in current scope.**
 
 ---
 
 ## The big picture
 
-**Business problem.** Earnings-call transcripts contain a lot of scripted noise
-(safe-harbor disclaimers, operator housekeeping, generic thanks) and a smaller amount
-of genuinely informative content (numbers, guidance, strategy commentary). Downstream
-analyst pipelines want only the latter. We build a sentence-level classifier and ship
-a GUI that tags transcripts inline.
+**Business problem.** Earnings-call transcripts contain a lot of scripted noise (safe-harbor disclaimers, operator housekeeping, generic thanks) and a smaller amount of genuinely informative content (numbers, guidance, strategy commentary). Downstream analyst pipelines want only the latter.
 
-**Asymmetric cost.** Losing a substantive sentence is much worse than forwarding a
-boilerplate one. The rubric encodes this: substantive recall ≥ 0.96 is a HARD floor;
-among recall-feasible thresholds, maximize macro-F1.
+**Asymmetric cost.** Losing a substantive sentence is much worse than forwarding a boilerplate one. The rubric encodes this: substantive recall ≥ 0.96 is a HARD floor; among recall-feasible thresholds, maximize macro-F1.
 
 **The four deliverables (one zip on Moodle):**
 
@@ -30,232 +25,183 @@ among recall-feasible thresholds, maximize macro-F1.
 
 ---
 
-## Architecture decisions (locked)
+## Hard rubric constraints
 
-| Layer | Choice | Why |
+| Constraint | Pts | Rule |
 |---|---|---|
-| Env manager | Conda | Matches David's global default. |
-| Python | 3.12 | ML ecosystem fully caught up by April 2026. |
-| Project layout | `src/` package | Clean imports, real pip-installable. |
-| Tracking | W&B Academic plan | Unlimited runs, 200GB artifacts, sweeps, registry, Reports. |
-| Compute (CPU) | Local Conda env | Rules, LogReg, trees, FastText, embeddings, all eval. |
-| Compute (GPU) | Google Colab free T4 | FinBERT fine-tune (~10 min), SetFit fine-tune (~5 min). |
-| W&B Training | NOT USED | Closed catalog (Qwen3 only); incompatible with our models. |
-| Gold labels | Multi-LLM majority vote | Required for rubric's 25-pt gold-standard criterion. |
-| GUI | Streamlit (default) | Shortest path; can swap to Gradio if it shines for inline highlighting. |
-| Git | `main` only, atomic commits, stage tags | Solo project, simple rollback. |
+| Substantive recall ≥ 0.96 on test | 15 | Hard floor; failing caps line at 0 |
+| Macro-F1 on test | 20 | Target ~0.90; among recall-feasible, maximize |
+| Leaderboard breadth | 15 | ≥5 families, same features/splits, speed reported |
+| Gold-standard quality | 25 | Multi-source labels, rubric with anchors, audited disagreements |
+| GUI | 10 | File picker, inline tagging, statistics panel, runs in <1 min |
+| Write-up | 15 | 5–10 pages, 8 specific sections |
 
 ---
 
-## The 9 stages
+## Architecture (locked)
 
-### Stage 1 — Project Foundation [DONE - tagged stage-1-foundation]
-
-Build the secure, reproducible scaffolding.
-
-**Deliverables:**
-- [x] Project skeleton (`data/`, `src/`, `scripts/`, `tests/`, `notebooks/`, `artifacts/`, `reports/`)
-- [x] `.gitignore` with project-specific overrides
-- [x] `.claudeignore` blocking secrets
-- [x] `.gitattributes` for cross-platform line endings
-- [x] `environment.yml` for the Conda env
-- [x] `pyproject.toml` with ruff + pytest config
-- [x] `.pre-commit-config.yaml` (detect-secrets, gitleaks, ruff, nbstripout)
-- [x] `scripts/gpu_runner.py` — secure W&B wrapper
-- [x] `scripts/api_clients.py` — judge-LLM factories
-- [x] Test suite (5 files): `test_secrets.py`, `test_no_secrets_in_repo.py`,
-      `test_env_smoke.py`, `test_data_paths.py`, `test_wandb_auth.py`
-- [x] `README.md` (grader-facing run instructions)
-- [x] `CLAUDE.md` (project rules)
-- [x] `PLAN.md` (this file)
-- [x] `WANDB_API_KEY` set as Windows User env var, verified
-- [x] `conda env create -f environment.yml`
-- [x] `conda activate Boilerplate_Classifier && pip install -e .`
-- [x] `pre-commit install` and `.secrets.baseline` generated
-- [x] `git init`, first commit, private GitHub repo at `github.com/davidavi111/bpclassifier`
-- [x] `pytest` passes (31 tests + smoke W&B auth)
-- [x] Tag `stage-1-foundation` pushed
-
-**Definition of Done:** All checkboxes above are checked. Tag exists. Repo is on
-GitHub (private). David has confirmed `pytest -q` is green.
+| Layer | Choice |
+|---|---|
+| Env manager | Conda (matches David's global default) |
+| Python | 3.12 |
+| Project layout | `src/` package |
+| Tracking | W&B Academic plan (unlimited runs, 200GB artifacts, sweeps, registry) |
+| Compute (CPU) | Local Conda env (rules, LogReg, trees, FastText, embeddings, eval) |
+| Compute (GPU) | Google Colab free T4 (FinBERT, SetFit) |
+| W&B managed compute | NOT USED (Qwen3-only catalog) |
+| LLM judges | Anthropic Sonnet 4.6 + DeepSeek-V3.1 + W&B Inference Llama 3.3 70B |
+| GUI | Streamlit |
+| Git | `main` only, atomic commits, stage tags |
 
 ---
 
-### Stage 2 — Data Extraction [DONE - awaiting commit]
+## All locked decisions across stages
 
-Turn 131 raw transcripts into a clean sentence pool.
+### Stage 3 — Gold Labels (9 decisions)
 
-**Outcome:**
-- 131 transcripts parsed (14 tickers: AMD, AVGO, BLK, C, FAST, GS, INTC, JNJ,
-  JPM, MSFT, NVDA, PLTR, V, WFC).
-- 54,923 sentences extracted (substantially higher than the original 8K–15K
-  estimate; the original was based on a truncated file listing — no quality
-  concern, just a bigger pool to draw from).
-- Section breakdown: 21,797 prepared_remarks / 7,644 question / 25,482 answer.
-- Length stats: mean 121, median 108, p95 242, max 1,004, min 40 chars.
-- `data/raw/sentences.parquet` written (regenerable, gitignored).
-- W&B Artifact `sentence-pool:v0` published.
+| # | Decision |
+|---|---|
+| 3.1 | Judges: Anthropic Sonnet 4.6 + DeepSeek-V3.1 (W&B Inference) + Llama 3.3 70B (W&B Inference). Gemini swapped due to free-tier rate limits making 2,500-sentence run impractical; DeepSeek preserves diversity (third distinct model lineage) and runs free on W&B academic credit. |
+| 3.2 | 2,500 sentences |
+| 3.3 | Stratify by `company × section_type` (42 cells × ~60 each) |
+| 3.4 | Supervisor drafts rubric v1; David reviews before judge calls |
+| 3.5 | Judge output: label + reasoning (`{"label": "...", "reasoning": "..."}`) |
+| 3.6 | Cache key: `(sentence_id, judge_name)` |
+| 3.7 | 5 concurrent calls per judge |
+| 3.8 | 50 disagreement cases audited by hand (~25 min) |
+| 3.9 | Weave on for all judge calls |
 
-**Implementation notes:**
-- Layer 1 parser adapted from David's prior earnings-NLP project; full
-  attribution comment in `src/bpclassifier/extract.py`.
-- Bug fix during Stage 2: when transcripts skip the role line and start a
-  Question/Answer/Presenter Speech section directly with content, the parser
-  was capturing the first sentence as `role`. Fixed via `_resolve_role_and_body`
-  (covers both empty-body AVGO case and non-empty-body cases).
-- `speaker_name` is best-effort and sparsely populated (6 unique values across
-  the corpus). The role-line format in this dataset is mostly 2-part
-  (`Executives - Title`) without an embedded person name. Raw `speaker_role`
-  field has 141 clean unique values and is the reliable column. Person-name
-  parsing can be improved post-hoc if it becomes a wanted feature.
-- Tests in place: `test_extract_*.py` — 21 tests, all passing.
+### Stage 4 — Splits + Features (5 decisions)
 
-**Definition of Done:** All checkboxes met. Tag `stage-2-extraction` pending.
+| # | Decision |
+|---|---|
+| 4.1 | Embedding model: `all-mpnet-base-v2` |
+| 4.2 | 60/20/20 splits, stratified by label, group-by-transcript, seed=42 |
+| 4.3 | No per-company holdout (default scope) |
+| 4.4 | Supervisor proposes ~25 regex flags; David reviews |
+| 4.5 | Cache: parquet local + W&B Artifact `embeddings:v0` |
 
----
+### Stage 5 — Classifier Zoo (3 decisions)
 
-### Stage 3 — Gold-Label Pipeline
+| # | Decision |
+|---|---|
+| 5.1 | 6 families: Rules + LogReg-on-embeddings + HistGBM + FastText + FinBERT + SetFit |
+| 5.2 | 5-fold stratified group-aware CV for OOF probabilities |
+| 5.3 | Colab uses W&B Artifacts as the bridge (no manual file shuffling) |
 
-Build the rubric, run multi-judge labeling, audit disagreements, freeze the gold set.
+### Stage 6 — Ensembles + Winner (3 decisions)
 
-**Tasks:**
-- Write `data/gold/rubric.md`: definitions of boilerplate vs. substantive, with 8–12
-  anchor examples per class, plus rules for edge cases (analyst intros, generic thanks,
-  one-word answers, mixed sentences).
-- Choose 3 judges. Default plan: local Ollama (qwen3:14b or similar), Anthropic Claude,
-  OpenAI GPT. (Will defer final choice; all clients ready in `api_clients.py`.)
-- Stratified-random-sample 2,500 sentences from the pool, balanced across companies and
-  estimated section.
-- Run each judge with caching (parquet, content-hash key) and resume-on-interrupt.
-- Compute per-judge agreement and pairwise Cohen's kappa.
-- Majority vote. Hand-audit a stratified sample of the disagreements (~100 sentences).
-- Freeze: `data/gold/labeled.parquet` (committed), `data/gold/audit_log.md` (committed).
-- Log W&B Run with disagreement stats. Save W&B Artifact `gold-labels:v0`.
-- Use Weave (`@weave.op()` decorators) on the judge call functions for free traceability.
+| # | Decision |
+|---|---|
+| 6.1 | Both ensembles: mean-probability + rank-averaged of top-5 non-transformer |
+| 6.2 | No calibration (skip Platt/isotonic) |
+| 6.3 | Winner: substantive recall ≥ 0.96 → highest macro-F1 wins (auto-enforced) |
 
-**Tests to add:**
-- `test_gold_class_balance.py` — class proportions within expected range.
-- `test_gold_no_duplicates.py` — sentence_id is unique.
-- `test_gold_judges_complete.py` — every row has 3 judge labels.
+### Stage 7 — GUI (3 decisions)
 
-**Definition of Done:** `data/gold/labeled.parquet` exists, frozen. Disagreement rate
-documented. Audit log committed.
+| # | Decision |
+|---|---|
+| 7.1 | Streamlit |
+| 7.2 | Statistics panel: counts + percentages + per-section breakdown |
+| 7.3 | Inputs: file uploader + paste textarea + dropdown of `ECT/` files |
 
 ---
 
-### Stage 4 — Splits + Feature Engineering
+## Stage progress
 
-**Tasks:**
-- 60/20/20 stratified split (label-stratified, with company-grouping check to avoid
-  leakage). Frozen seed = 42.
-- Save split indices as `data/splits/{train,val,test}.json` (committed, tiny).
-- Build 20–30 regex feature flags (safe-harbor, operator cues, generic thanks, dollar/percent
-  counts, digit density, length, punctuation ratios, speaker-intro patterns, analyst firms).
-- Generate sentence embeddings via `sentence-transformers` (default: `all-mpnet-base-v2` or
-  `mxbai-embed-large`) for the entire pool. Cache as W&B Artifact `embeddings:v0`.
-- Build the feature matrix `X = [embeddings | regex_flags]`.
+### Stage 1 — Project Foundation [DONE — tagged stage-1-foundation]
 
-**Tests:** `test_splits_no_leakage.py`, `test_features_shape.py`, `test_features_no_nan.py`.
+Conda env, project structure, secure W&B wrapper, judge-LLM scaffolding, pre-commit hooks (detect-secrets + gitleaks + ruff + nbstripout), 31 tests, private GitHub repo, tag pushed.
 
----
+### Stage 2 — Data Extraction [DONE — tagged stage-2-extraction]
+
+131 transcripts → 54,923 sentences with full metadata. Section breakdown: 21,797 prepared_remarks / 7,644 question / 25,482 answer. Length stats: mean 121, median 108, p95 242, max 1,004, min 40. Output at `data/raw/sentences.parquet` + W&B Artifact `sentence-pool:v0`. 21 extraction tests passing.
+
+**Known issue:** `speaker_name` is sparsely populated (6 unique values across 54K rows). Raw `speaker_role` field has 141 clean unique values and is the reliable column. Person-name parsing can be improved post-hoc if needed.
+
+### Stage 3 — Gold Labels [IN PROGRESS]
+
+**Already done:**
+- All 9 architectural decisions locked
+- Rubric v1 drafted at `data/gold/rubric.md` (awaiting David's review)
+
+**Remaining:**
+- David reviews rubric, provides edits, approves
+- David sets `ANTHROPIC_API_KEY` and `GOOGLE_API_KEY` as Windows User env vars
+- David sets $10 spend cap at console.anthropic.com
+- Build `scripts/02_label.py` (sample → 3 judges concurrent, cached, Weave-traced → judge_outputs.parquet)
+- Build `scripts/03_audit.py` (50 disagreements for human review)
+- Build `scripts/04_freeze_gold.py` (majority vote + audit corrections → `data/gold/labeled.parquet` + W&B Artifact `gold-labels:v0` + `data/gold/audit_log.md`)
+- Tests: `test_gold_class_balance.py`, `test_gold_no_duplicates.py`, `test_gold_judges_complete.py`
+- Commit + tag `stage-3-gold-labels`, push
+
+### Stage 4 — Splits + Features
+
+- 60/20/20 stratified group-aware split (frozen seed = 42), saved as `data/splits/{train,val,test}.json`
+- Compute embeddings via `all-mpnet-base-v2`, cache as parquet + W&B Artifact `embeddings:v0`
+- Apply ~25 regex feature flags (David reviews list)
+- Tests: leakage checks, shape checks, NaN checks
+- Commit + tag `stage-4-features`
 
 ### Stage 5 — Classifier Zoo
 
-Six families on the same features and splits. Same OOF protocol for threshold tuning.
+- 6 families on identical features/splits
+- 5-fold OOF probabilities for threshold tuning
+- FinBERT + SetFit on Colab (W&B-mediated handoff)
+- Tests: each family trains without error
+- Commit + tag `stage-5-zoo`
 
-| Family | Library | Approx cost |
-|---|---|---|
-| Rules + regex baseline | pure Python | seconds |
-| LogReg on frozen embeddings | sklearn | seconds |
-| HistGradientBoosting on embeddings + flags | sklearn | minutes |
-| FastText n-gram | fasttext-wheel | seconds |
-| FinBERT fine-tune | transformers (Colab T4) | 10–15 min |
-| SetFit contrastive fine-tune | setfit (Colab T4) | 5–15 min |
+### Stage 6 — Ensembles + Winner
 
-For each: train, log to W&B (run config + metrics + curves), compute 5-fold OOF
-probabilities on train+val, save model.
-
-**Tests:** `test_zoo_each_family_trains.py` (smoke).
-
----
-
-### Stage 6 — Threshold Tuning, Ensembles, Winner Selection
-
-**Tasks:**
-- Pool OOF probabilities. For each model: find the lowest threshold that achieves
-  substantive recall ≥ 0.96 on OOF. Report fold-to-fold std of the chosen threshold.
-- Mean-prob ensemble of top-5 non-transformer members. Rank-averaged ensemble of same.
-- All models eligible if and only if they have a feasible threshold.
-- Among eligible models, pick the one with highest macro-F1 on the *test* set.
-  THIS IS THE ONLY TIME THE TEST SET IS TOUCHED.
-- Save winner + threshold as W&B Artifact `winning-model:v0`. Promote in registry to
-  alias `production`.
-
----
+- Mean-prob and rank-averaged ensembles of top-5 non-transformer
+- Apply recall floor (≥ 0.96 on test, touched ONCE)
+- Among eligible, max macro-F1 wins
+- Save winner + threshold to W&B Model Registry, alias `production`
+- Commit + tag `stage-6-winner`
 
 ### Stage 7 — GUI
 
-**Tasks:**
-- Streamlit app that:
-  - Lets user upload or paste a transcript.
-  - Sentence-tokenizes (same code as Stage 2).
-  - Loads winning model from `artifacts/` or W&B registry.
-  - Renders inline: boilerplate sentences with red background, substantive plain.
-  - Statistics panel: counts, percentages.
-  - Run instruction in the README.
+- Streamlit app: file uploader + paste textarea + ECT/ dropdown
+- Inline rendering with red boilerplate background
+- Stats panel: counts + percentages + per-section
+- Eyeball test on 2 unseen transcripts
+- Commit + tag `stage-7-gui`
 
-**Tests:** `test_gui_loads_model.py`, manual eyeball test on 2 unseen transcripts.
+### Stages 8 + 9 — Out of scope
 
----
-
-### Stage 8 — Write-up PDF
-
-5–10 pages, with figures. Sections:
-
-- Introduction (1 paragraph)
-- Gold-standard methodology (sources, rubric, disagreement rate, audit, class balance)
-- Feature engineering (regex flags + why)
-- Classifier-zoo results (leaderboard table, paragraph per family)
-- Recall-constrained threshold selection (procedure, per-class P/R/F1, confusion matrices)
-- Error analysis (~10 misclassifications by direction, with commentary)
-- GUI screenshot (full page)
-- Reproducibility (commands)
-- LLM-usage disclosure (per ground rules)
-
-Use the `docx` skill to author professional output, export to PDF.
+Deferred. The supervising chat should not bring these up unless David explicitly initiates.
 
 ---
 
-### Stage 9 — Submission Packaging
+## Cost & rate-limit summary
 
-- Test the run-from-clean-checkout commands on a fresh clone.
-- Zip everything per Moodle requirements.
-- Final commit + tag `submission`.
-
----
-
-## Improvements beyond the rubric (David asked for these)
-
-Discussed in the relevant stage; not yet committed:
-
-1. **Calibration** (Stage 6): Platt or isotonic on top of LogReg/HistGBM probabilities. Helps
-   threshold selection when raw probabilities are skewed.
-2. **Conformal prediction** (Stage 6 add-on): produce uncertainty bands so the GUI can flag
-   "low confidence" sentences in a third color.
-3. **Per-company holdout** (Stage 4 add-on): in addition to the random test set, hold out one
-   entire company (e.g. NVDA) and report transfer numbers. Tests robustness to new issuers.
-4. **Active learning loop** (Stage 3 add-on): after the audit, train a quick LogReg, find
-   cases of high model uncertainty in the unlabeled pool, label those, retrain. 200 extra
-   labels typically yields more F1 than 1000 random ones.
-5. **Speaker / section context features** (Stage 4 add-on): the previous sentence's class
-   and the section header (Q&A vs. prepared) are highly predictive features.
+- **Anthropic Sonnet 4.6:** ~$8 total for the project. $10 hard cap.
+- **Google Gemini 2.5 Flash:** free tier (15 RPM, 1,500 RPD). Caching handles daily-cap interruptions.
+- **W&B Inference Llama 3.3 70B:** free under $250/mo academic credit.
+- **All other compute:** free (local CPU, Colab T4).
 
 ---
 
-## Open questions to resolve later (not blocking now)
+## Required user interventions (already minimized)
 
-- Final choice of judge LLMs (locked at start of Stage 3).
-- Embedding model choice between `all-mpnet-base-v2` (smaller, faster) and `mxbai-embed-large`
-  (larger, possibly stronger). Decide at Stage 4 by running both on a small sample.
-- Streamlit vs. Gradio for the GUI — Streamlit is the default, revisit if it can't render
-  inline highlighting cleanly.
+| Touchpoint | Time |
+|---|---|
+| Set Anthropic + Google API keys | 10 min, one-time |
+| Review rubric draft | 10 min |
+| Review the ~25 regex flags | 10 min |
+| Audit 50 disagreement cases | 25 min |
+| Run 2 Colab notebooks (FinBERT + SetFit) | 10 min total |
+| GUI eyeball test | 10 min |
+| Approve commits/tags | quick |
+
+**Total: ~75 minutes of focused human time across the rest of the project.**
+
+---
+
+## Improvements deferred (could revisit if time allows)
+
+- Probability calibration (Platt/isotonic) — only if threshold variance > 0.05
+- Per-company holdout for cross-company generalization check
+- Active learning loop after first classifier
+- Conformal prediction uncertainty bands
+- Speaker / section context features

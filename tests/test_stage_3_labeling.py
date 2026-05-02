@@ -164,8 +164,8 @@ class TestCache:
 
     def test_multiple_entries_all_loaded(self, tmp_path):
         for i in range(10):
-            append_to_cache("google", _make_cache_entry(f"s{i:04d}", "google"), tmp_path)
-        cache = load_cache("google", tmp_path)
+            append_to_cache("deepseek", _make_cache_entry(f"s{i:04d}", "deepseek"), tmp_path)
+        cache = load_cache("deepseek", tmp_path)
         assert len(cache) == 10
 
     def test_corrupt_line_skipped(self, tmp_path):
@@ -219,20 +219,20 @@ class TestCache:
         sentence_ids = [f"s{i:04d}" for i in range(6)]
         # Pre-cache first 3
         for sid in sentence_ids[:3]:
-            append_to_cache("google", _make_cache_entry(sid, "google"), tmp_path)
+            append_to_cache("deepseek", _make_cache_entry(sid, "deepseek"), tmp_path)
 
-        cache = load_cache("google", tmp_path)
+        cache = load_cache("deepseek", tmp_path)
         rows = _make_rows(sentence_ids)
 
         called_ids: list[str] = []
 
         async def mock_judge_fn(sid: str, prompt: str) -> dict:
             called_ids.append(sid)
-            return _make_cache_entry(sid, "google")
+            return _make_cache_entry(sid, "deepseek")
 
         asyncio.run(
             run_one_judge(
-                "google",
+                "deepseek",
                 rows,
                 cache,
                 mock_judge_fn,
@@ -251,7 +251,7 @@ class TestOutputSchema:
     def _make_minimal_output(self) -> pd.DataFrame:
         """Build a minimal judge_outputs DataFrame that matches the spec."""
         rows = []
-        for judge in ("anthropic", "google", "llama"):
+        for judge in ("anthropic", "deepseek", "llama"):
             rows.append(
                 {
                     "sentence_id": "s0001",
@@ -288,7 +288,7 @@ class TestOutputSchema:
 
     def test_judge_names_correct(self):
         df = self._make_minimal_output()
-        assert set(df["judge_name"]) == {"anthropic", "google", "llama"}
+        assert set(df["judge_name"]) == {"anthropic", "deepseek", "llama"}
 
 
 # ── 4. parse_json_response edge cases ─────────────────────────────────────────

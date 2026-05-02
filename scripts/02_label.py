@@ -39,12 +39,12 @@ _ROOT = _SCRIPTS.parent
 sys.path.insert(0, str(_SCRIPTS.resolve()))
 sys.path.insert(0, str((_ROOT / "src").resolve()))
 
-from api_clients import anthropic_client, google_client, wandb_inference_client  # noqa: E402
+from api_clients import anthropic_client, wandb_inference_client  # noqa: E402
 from bpclassifier.label import (  # noqa: E402
     ANTHROPIC_COST_LIMIT_USD,
     ANTHROPIC_MODEL,
     CONCURRENCY,
-    GOOGLE_MODEL,
+    DEEPSEEK_MODEL,
     LLAMA_MODEL,
     PROMPT_VERSION,
     REQUIRED_OUTPUT_COLUMNS,
@@ -176,15 +176,13 @@ async def _call_anthropic(
 
 
 @weave.op()
-async def _call_google(
+async def _call_deepseek(
     sentence_id: str,
     user_prompt: str,
     rubric: str,
     client: Any,
 ) -> dict:
-    """Call Google Gemini; retry once on malformed JSON."""
-    from google.genai import types as genai_types  # type: ignore[import]
-
+    """Call DeepSeek-V3.1 via W&B Inference; retry once on malformed JSON."""
     label = reasoning = raw = None
     error = None
     latency_ms = 0
@@ -193,16 +191,16 @@ async def _call_google(
         t0 = time.perf_counter()
         try:
             resp = await asyncio.to_thread(
-                client.models.generate_content,
-                model=GOOGLE_MODEL,
-                contents=user_prompt,
-                config=genai_types.GenerateContentConfig(
-                    system_instruction=rubric,
-                    max_output_tokens=256,
-                    response_mime_type="application/json",
-                ),
+                client.chat.completions.create,
+                model=DEEPSEEK_MODEL,
+                messages=[
+                    {"role": "system", "content": rubric},
+                    {"role": "user", "content": user_prompt},
+                ],
+                max_tokens=256,
+                response_format={"type": "json_object"},
             )
-            raw = resp.text
+            raw = resp.choices[0].message.content
         except Exception as exc:
             latency_ms = int((time.perf_counter() - t0) * 1000)
             if attempt == 1:
@@ -217,18 +215,18 @@ async def _call_google(
             error = None
             break
         if attempt == 0:
-            log.warning("sentence %s: malformed Gemini JSON, retrying", sentence_id)
+            log.warning("sentence %s: malformed DeepSeek JSON, retrying", sentence_id)
 
     if label is None and error is None:
         error = f"Malformed JSON after 2 attempts. Raw: {(raw or '')[:200]!r}"
 
     return {
         "sentence_id": sentence_id,
-        "judge_name": "google",
+        "judge_name": "deepseek",
         "label": label,
         "reasoning": reasoning,
         "latency_ms": latency_ms,
-        "model_id": GOOGLE_MODEL,
+        "model_id": DEEPSEEK_MODEL,
         "prompt_version": PROMPT_VERSION,
         "error": error,
     }
@@ -324,7 +322,7 @@ async def main() -> None:
             "prompt_version": PROMPT_VERSION,
             "concurrency": CONCURRENCY,
             "anthropic_model": ANTHROPIC_MODEL,
-            "google_model": GOOGLE_MODEL,
+            "deepseek_model": DEEPSEEK_MODEL,
             "llama_model": LLAMA_MODEL,
             "seed": SEED,
             "cost_limit_usd": ANTHROPIC_COST_LIMIT_USD,
@@ -334,14 +332,17 @@ async def main() -> None:
     )
 
     # Build clients (each factory checks its env var and raises if missing)
+    # DeepSeek and Llama both run on W&B Inference (OpenAI-compatible); model is
+    # specified per-call so two separate client instances are not strictly required,
+    # but keeping them independent isolates connection state.
     clients = {
         "anthropic": anthropic_client(),
-        "google": google_client(),
+        "deepseek": wandb_inference_client(),
         "llama": wandb_inference_client(),
     }
 
     # Load JSONL caches (resume support)
-    caches = {j: load_cache(j, CACHE_DIR) for j in ("anthropic", "google", "llama")}
+    caches = {j: load_cache(j, CACHE_DIR) for j in ("anthropic", "deepseek", "llama")}
     for j, c in caches.items():
         log.info("%s cache: %d existing entries (will skip)", j, len(c))
 
@@ -353,7 +354,7 @@ async def main() -> None:
     }
 
     # Per-judge semaphores (5 concurrent calls each, independent)
-    sems = {j: asyncio.Semaphore(CONCURRENCY) for j in ("anthropic", "google", "llama")}
+    sems = {j: asyncio.Semaphore(CONCURRENCY) for j in ("anthropic", "deepseek", "llama")}
 
     # Bind clients and cost_tracker into judge_fn callables for run_one_judge
     _rubric = rubric  # local alias for closures
@@ -361,19 +362,21 @@ async def main() -> None:
     async def anthropic_fn(sid: str, prompt: str) -> dict:
         return await _call_anthropic(sid, prompt, _rubric, clients["anthropic"], cost_tracker)
 
-    async def google_fn(sid: str, prompt: str) -> dict:
-        return await _call_google(sid, prompt, _rubric, clients["google"])
+    async def deepseek_fn(sid: str, prompt: str) -> dict:
+        return await _call_deepseek(sid, prompt, _rubric, clients["deepseek"])
 
     async def llama_fn(sid: str, prompt: str) -> dict:
         return await _call_llama(sid, prompt, _rubric, clients["llama"])
 
     # Dispatch all 3 judges concurrently
     log.info("Dispatching %d sentences × 3 judges…", len(rows))
-    anthropic_results, google_results, llama_results = await asyncio.gather(
+    anthropic_results, deepseek_results, llama_results = await asyncio.gather(
         run_one_judge(
             "anthropic", rows, caches["anthropic"], anthropic_fn, CACHE_DIR, sems["anthropic"]
         ),
-        run_one_judge("google", rows, caches["google"], google_fn, CACHE_DIR, sems["google"]),
+        run_one_judge(
+            "deepseek", rows, caches["deepseek"], deepseek_fn, CACHE_DIR, sems["deepseek"]
+        ),
         run_one_judge("llama", rows, caches["llama"], llama_fn, CACHE_DIR, sems["llama"]),
     )
 
@@ -382,7 +385,7 @@ async def main() -> None:
     )
 
     # Assemble output DataFrame
-    all_results = anthropic_results + google_results + llama_results
+    all_results = anthropic_results + deepseek_results + llama_results
     output_df = pd.DataFrame(all_results)[REQUIRED_OUTPUT_COLUMNS]
     output_df.to_parquet(OUTPUT_PATH, index=False)
     log.info("Saved judge outputs → %s  (%d rows)", OUTPUT_PATH, len(output_df))

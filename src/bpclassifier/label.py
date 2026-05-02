@@ -26,7 +26,7 @@ CONCURRENCY = 5
 SEED = 42
 
 ANTHROPIC_MODEL = "claude-sonnet-4-6"
-GOOGLE_MODEL = "gemini-2.5-flash"
+DEEPSEEK_MODEL = "deepseek-ai/DeepSeek-V3.1"
 LLAMA_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
 
 # Anthropic Sonnet 4.6 token pricing (USD per token)
@@ -64,11 +64,13 @@ def build_user_prompt(row: Any) -> str:
     )
 
 
-def parse_json_response(text: str) -> dict | None:
+def parse_json_response(text: str | None) -> dict | None:
     """
     Extract a valid label JSON object from model output.
     Strips markdown fences if present. Returns None on failure.
     """
+    if text is None:
+        return None
     text = text.strip()
     if text.startswith("```"):
         parts = text.split("```")
@@ -101,9 +103,10 @@ def create_labeling_sample(
     sample if any stratum has fewer than 2 members (can't stratify).
     """
     strat_col = sentences_df["company"].astype(str) + "|" + sentences_df["section_type"].astype(str)
+    n_strata = strat_col.nunique()
     min_count = strat_col.value_counts().min()
 
-    if min_count < 2 or n >= len(sentences_df):
+    if min_count < 2 or n >= len(sentences_df) or n < n_strata:
         total = len(sentences_df)
         strat_sizes = strat_col.value_counts()
         pieces = []
@@ -187,7 +190,7 @@ async def run_one_judge(
     async def _process(idx: int, row: Any) -> None:
         nonlocal cache_hits
         sid = row.sentence_id
-        if sid in cache:
+        if sid in cache and cache[sid].get("label") is not None and not cache[sid].get("error"):
             results[idx] = cache[sid]
             cache_hits += 1
             return
