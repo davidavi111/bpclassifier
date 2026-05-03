@@ -41,6 +41,7 @@ sys.path.insert(0, str((_ROOT / "src").resolve()))
 
 from api_clients import anthropic_client, wandb_inference_client  # noqa: E402
 from bpclassifier.label import (  # noqa: E402
+    ANTHROPIC_CONCURRENCY,
     ANTHROPIC_COST_LIMIT_USD,
     ANTHROPIC_MODEL,
     CONCURRENCY,
@@ -368,8 +369,10 @@ async def main() -> None:
         "total_sentences": max(0, len(rows) - len(caches["anthropic"])),
     }
 
-    # Per-judge semaphores (5 concurrent calls each, independent)
-    sems = {j: asyncio.Semaphore(CONCURRENCY) for j in ("anthropic", "deepseek", "llama")}
+    # Per-judge semaphores — Anthropic uses ANTHROPIC_CONCURRENCY (2) because the
+    # Tier-1 RPM cap (~50) was hit at concurrency=5; DeepSeek and Llama keep 5.
+    sems = {j: asyncio.Semaphore(CONCURRENCY) for j in ("deepseek", "llama")}
+    sems["anthropic"] = asyncio.Semaphore(ANTHROPIC_CONCURRENCY)
 
     # Bind clients and cost_tracker into judge_fn callables for run_one_judge
     _rubric = rubric  # local alias for closures

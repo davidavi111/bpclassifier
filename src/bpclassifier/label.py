@@ -23,6 +23,7 @@ log = logging.getLogger(__name__)
 SAMPLE_SIZE = 2_500
 PROMPT_VERSION = 1
 CONCURRENCY = 5
+ANTHROPIC_CONCURRENCY: int = 2  # Anthropic Tier-1 RPM cap (~50) was hit at 5; 2 keeps headroom
 SEED = 42
 
 ANTHROPIC_MODEL = "claude-sonnet-4-6"
