@@ -57,7 +57,7 @@ Single source of truth for the project. Read first by Claude Code on every sessi
 
 ## All locked decisions across stages
 
-### Stage 3 — Gold Labels (9 decisions)
+### Stage 3 — Gold Labels (10 decisions)
 
 | # | Decision |
 |---|---|
@@ -70,6 +70,7 @@ Single source of truth for the project. Read first by Claude Code on every sessi
 | 3.7 | 5 concurrent calls per judge |
 | 3.8 | 50 disagreement cases audited by hand (~25 min) |
 | 3.9 | Weave on for all judge calls |
+| 3.10 | Meta-judge Qwen/Qwen3.5-27B applied to all 332 disagreements; audit overrides (david_label) applied when present (46 cases); remaining disagreements resolved by meta_label. |
 
 ### Stage 4 — Splits + Features (5 decisions)
 
@@ -122,16 +123,15 @@ Conda env, project structure, secure W&B wrapper, judge-LLM scaffolding, pre-com
 ### Stage 3 — Gold Labels [IN PROGRESS]
 
 **Already done:**
-- All 9 architectural decisions locked
-- Rubric v1 drafted at `data/gold/rubric.md` (awaiting David's review)
+- All 10 architectural decisions locked (3.10 added)
+- Rubric at `data/gold/rubric.md`
+- 3-judge labeling pipeline (`scripts/02_label.py`): 2,500 sentences labeled, Fleiss κ=0.71
+- Manual audit CLI (`scripts/03_audit.py`): 46/50 cases decided by David
+- Meta-judge pipeline (`scripts/05_meta_judge.py`): Qwen3.5-27B on all 332 disagreements; 332/332 labeled, 0 errors; boilerplate=222, substantive=110
+- Gold audit artifacts committed: rubric.md, audit_decisions.jsonl, audit_sample.parquet
 
 **Remaining:**
-- David reviews rubric, provides edits, approves
-- David sets `ANTHROPIC_API_KEY` and `GOOGLE_API_KEY` as Windows User env vars
-- David sets $10 spend cap at console.anthropic.com
-- Build `scripts/02_label.py` (sample → 3 judges concurrent, cached, Weave-traced → judge_outputs.parquet)
-- Build `scripts/03_audit.py` (50 disagreements for human review)
-- Build `scripts/04_freeze_gold.py` (majority vote + audit corrections → `data/gold/labeled.parquet` + W&B Artifact `gold-labels:v0` + `data/gold/audit_log.md`)
+- Build `scripts/04_freeze_gold.py` (hierarchy: audit > meta_judge > unanimous → `data/gold/labeled.parquet` + W&B Artifact `gold-labels:v0` + `data/gold/audit_log.md`)
 - Tests: `test_gold_class_balance.py`, `test_gold_no_duplicates.py`, `test_gold_judges_complete.py`
 - Commit + tag `stage-3-gold-labels`, push
 
