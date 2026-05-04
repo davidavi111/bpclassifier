@@ -1,0 +1,2014 @@
+[
+  {
+    "sentence_id": "AMD_Q4-2024_00000",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00003",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00018",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00021",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00023",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00046",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00083",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00100",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00149",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00154",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00184",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00253",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00295",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00355",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00365",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00373",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AMD_Q4-2024_00380",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00016",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00029",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00043",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00044",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00047",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00116",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00184",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00205",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00211",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00214",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00226",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00228",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00246",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00265",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "AVGO_Q1-2026_00288",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00007",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00024",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00048",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00053",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00144",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00155",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00178",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00179",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00212",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00232",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00304",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00326",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00362",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00364",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00391",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q1-2025_00395",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00035",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00075",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00078",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00112",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00136",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00166",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00190",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00195",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00224",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00234",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00244",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00294",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00306",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00319",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00336",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00352",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00403",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q2-2025_00413",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00019",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00020",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00026",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00081",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00094",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00106",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00141",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00143",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00153",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00155",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00204",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00216",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00221",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00222",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00225",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00231",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00239",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00243",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00279",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00346",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00363",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00381",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00417",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "BLK_Q4-2025_00430",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00011",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00017",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00035",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00103",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00105",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00123",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00146",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00148",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00154",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00157",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00164",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00169",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00170",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00200",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00232",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00245",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00258",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00281",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00283",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00297",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00302",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00305",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00314",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00325",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00350",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00387",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00391",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00401",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00424",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00425",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00467",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00510",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00522",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00528",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00539",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00545",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00551",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "C_Q2-2025_00568",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00014",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00017",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00027",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00060",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00097",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00147",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00152",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00166",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00174",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00283",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00286",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00306",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00331",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00353",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q2-2024_00420",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00033",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00042",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00045",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00057",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00099",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00123",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00124",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00132",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00142",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00151",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00172",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00188",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00191",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00215",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00318",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00320",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00329",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00331",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q3-2025_00355",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00041",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00065",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00070",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00113",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00230",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00257",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00290",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00292",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00320",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00331",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00367",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00389",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00390",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00425",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FAST_Q4-2023_00458",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00005",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00090",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00092",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00105",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00110",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00114",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00181",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00196",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00217",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00221",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00332",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00337",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00338",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00349",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00356",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00393",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00406",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00414",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00416",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00450",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00459",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q2-2026_00461",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00015",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00053",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00056",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00070",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00076",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00188",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00233",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00244",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00251",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00258",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00274",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00307",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00316",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00319",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00380",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00423",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00424",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00430",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q3-2025_00461",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00022",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00045",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00051",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00132",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00144",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00175",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00193",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00210",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00217",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00251",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00255",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00261",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00275",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00294",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00297",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00317",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00374",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00383",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00410",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00425",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "FDX_Q4-2025_00437",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00044",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00057",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00067",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00086",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00087",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00103",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00112",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00128",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00132",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00139",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00231",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00241",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00247",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00265",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00286",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00296",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00303",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00323",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00324",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00347",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00368",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00376",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00416",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "GS_Q4-2023_00417",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00080",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00149",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00155",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00161",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00185",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00196",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00202",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00224",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00264",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00321",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00323",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00340",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00412",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00427",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00431",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q1-2024_00451",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00011",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00065",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00078",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00101",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00116",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00120",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00173",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00204",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00207",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00210",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00228",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00248",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00262",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00278",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00280",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00281",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00299",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00392",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00395",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "INTC_Q4-2025_00411",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00018",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00019",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00071",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00090",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00113",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00140",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00154",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00179",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00206",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00291",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00327",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00329",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00331",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00332",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00333",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00345",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00370",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00379",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00391",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00408",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00426",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00436",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JNJ_Q4-2025_00482",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00011",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00040",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00065",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00080",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00093",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00119",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00137",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00157",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00158",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00178",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00192",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00220",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00236",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00244",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00253",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00256",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00278",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00322",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00335",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00379",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00392",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00400",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00415",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00426",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00458",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q1-2024_00462",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00009",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00011",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00012",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00016",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00105",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00136",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00184",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00194",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00221",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00222",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00226",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00231",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00233",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00241",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00257",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00281",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00295",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00300",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00308",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00325",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00337",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q3-2025_00374",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00018",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00056",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00084",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00091",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00146",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00169",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00185",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00205",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00207",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00262",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "JPM_Q4-2023_00336",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00022",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00044",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00075",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00098",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00111",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00113",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00198",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00219",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00260",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00269",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00288",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00292",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00302",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00323",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00327",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00369",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00379",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00380",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "NKE_Q1-2026_00383",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00012",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00020",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00080",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00153",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00212",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00261",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00306",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00327",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00343",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00346",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00386",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "NVDA_Q4-2026_00405",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00002",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00010",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00056",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00118",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00134",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00179",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00182",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00204",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q1-2025_00267",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00000",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00050",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00054",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00067",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00075",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00079",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00084",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00095",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00113",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00132",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00137",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00175",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00214",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00218",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00226",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00241",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00242",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00244",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "PLTR_Q2-2025_00249",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00002",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00031",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00044",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00076",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00104",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00161",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00185",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00199",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00263",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00287",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00304",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00342",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00367",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00381",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00386",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00389",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00395",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00411",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00488",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00491",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q1-2025_00513",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00005",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00046",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00053",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00091",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00168",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00172",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00198",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00232",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00283",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00332",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00336",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00342",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00343",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00361",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00363",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00373",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00388",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00407",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00428",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00441",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q2-2025_00457",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00000",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00004",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00026",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00033",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00036",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00056",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00136",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00147",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00149",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00162",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00187",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00200",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00230",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00238",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00240",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00294",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00312",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00346",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00402",
+    "gold_label": "boilerplate"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00406",
+    "gold_label": "substantive"
+  },
+  {
+    "sentence_id": "WFC_Q4-2023_00408",
+    "gold_label": "substantive"
+  }
+]
