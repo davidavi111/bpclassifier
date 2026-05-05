@@ -16,7 +16,7 @@ _ROOT = Path(__file__).parent.parent
 SPLITS_DIR = _ROOT / "data" / "splits"
 INTERIM = _ROOT / "data" / "interim"
 
-MODELS = ["rules", "logreg", "histgbm", "fasttext"]
+MODELS = ["rules", "logreg", "histgbm", "fasttext", "finbert", "setfit"]
 
 TRAIN_N = (
     json.loads((SPLITS_DIR / "train.json").read_text())
