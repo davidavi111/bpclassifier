@@ -163,7 +163,9 @@ def render_inline(results: list[dict]) -> None:
                 parts.append(f'<span style="{_BP_STYLE}">{escaped}</span>')
             else:
                 parts.append(escaped)
-        st.markdown(" ".join(parts), unsafe_allow_html=True)
+        body = " ".join(parts)
+        html_block = f'<div style="line-height:1.6; font-family:inherit;">{body}</div>'
+        st.markdown(html_block, unsafe_allow_html=True)
         st.write("")  # spacing
 
 
