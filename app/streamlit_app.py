@@ -137,7 +137,6 @@ def run_pipeline_raw(raw_text: str, model, tokenizer, threshold: float) -> list[
 _BP_STYLE = (
     "background-color:#ffcccc; padding:1px 4px; border-radius:3px;" " margin:1px 0; display:inline;"
 )
-_SUB_STYLE = "display:inline;"
 _SECTION_ICONS = {
     "prepared_remarks": "📋 Prepared Remarks",
     "question": "❓ Questions",
@@ -163,7 +162,7 @@ def render_inline(results: list[dict]) -> None:
             if r["label"] == "boilerplate":
                 parts.append(f'<span style="{_BP_STYLE}">{escaped}</span>')
             else:
-                parts.append(f'<span style="{_SUB_STYLE}">{escaped}</span>')
+                parts.append(escaped)
         st.markdown(" ".join(parts), unsafe_allow_html=True)
         st.write("")  # spacing
 
