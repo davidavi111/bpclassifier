@@ -34,33 +34,38 @@ _SPLITS_DIR = _ROOT / "data" / "splits"
 _EVAL_DIR = _ROOT / "data" / "eval"
 
 
+ENTITY = "david-avichzer-hebrew-university-of-jerusalem"
+PROJECT = "Boilerplate_Classifier"
+
+
 def load_winner():
-    """Download FinBERT winner from W&B, return (model, tokenizer, threshold)."""
+    """Download FinBERT+SetFit ensemble from W&B, return (fb_model, tokenizer, sf_model, threshold)."""
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
     get_wandb_key()
     import wandb  # noqa: PLC0415
+    from setfit import SetFitModel  # noqa: PLC0415
 
     with open(_EVAL_DIR / "confusion_matrix_test.json", encoding="utf-8") as fh:
         cfg = json.load(fh)
-    winner_name = cfg["winner"]
     threshold = float(cfg["threshold"])
 
     api = wandb.Api()
-    art = api.artifact(
-        f"david-avichzer-hebrew-university-of-jerusalem/"
-        f"Boilerplate_Classifier/model-{winner_name}:v0"
-    )
-    model_dir = Path(art.download())
 
-    tokenizer = AutoTokenizer.from_pretrained(str(model_dir))
-    model = AutoModelForSequenceClassification.from_pretrained(str(model_dir))
-    model.eval()
+    fb_art = api.artifact(f"{ENTITY}/{PROJECT}/model-finbert:v0")
+    fb_dir = Path(fb_art.download())
+    tokenizer = AutoTokenizer.from_pretrained(str(fb_dir))
+    fb_model = AutoModelForSequenceClassification.from_pretrained(str(fb_dir))
+    fb_model.eval()
 
-    return model, tokenizer, threshold, winner_name
+    sf_art = api.artifact(f"{ENTITY}/{PROJECT}/model-setfit:v0")
+    sf_dir = Path(sf_art.download())
+    sf_model = SetFitModel.from_pretrained(str(sf_dir))
+
+    return fb_model, tokenizer, sf_model, threshold
 
 
-def predict_proba(model, tokenizer, texts: list[str], batch_size: int = 32) -> np.ndarray:
+def _finbert_proba(fb_model, tokenizer, texts: list[str], batch_size: int = 32) -> np.ndarray:
     import torch
     import torch.nn.functional as F  # noqa: N812
 
@@ -71,19 +76,29 @@ def predict_proba(model, tokenizer, texts: list[str], batch_size: int = 32) -> n
             inputs = tokenizer(
                 batch, truncation=True, padding=True, max_length=128, return_tensors="pt"
             )
-            logits = model(**inputs).logits
+            logits = fb_model(**inputs).logits
             probs = F.softmax(logits, dim=-1)[:, 1].cpu().numpy()
             all_probs.extend(probs.tolist())
     return np.clip(np.array(all_probs, dtype=float), 0.0, 1.0)
 
 
-def run_on_transcript(path: Path, model, tokenizer, threshold: float) -> list[dict]:
+def predict_proba_ensemble(fb_model, tokenizer, sf_model, texts: list[str]) -> np.ndarray:
+    """Return mean of FinBERT and SetFit probabilities for substantive class."""
+    fb_probs = _finbert_proba(fb_model, tokenizer, texts)
+    raw = sf_model.predict_proba(texts)
+    sf_probs = np.clip(
+        raw.numpy() if hasattr(raw, "numpy") else np.array(raw, dtype=float), 0.0, 1.0
+    )[:, 1]
+    return 0.5 * fb_probs + 0.5 * sf_probs
+
+
+def run_on_transcript(path: Path, fb_model, tokenizer, sf_model, threshold: float) -> list[dict]:
     transcript = parse_transcript(path)
     sentences = transcript_to_sentences(transcript)
     if not sentences:
         return []
     texts = [s.text for s in sentences]
-    probs = predict_proba(model, tokenizer, texts)
+    probs = predict_proba_ensemble(fb_model, tokenizer, sf_model, texts)
     return [
         {
             "text": s.text,
@@ -109,7 +124,7 @@ def get_test_ticker_quarters() -> list[str]:
 
 
 def pick_eyeball_transcripts(
-    ticker_quarters: list[str], model, tokenizer, threshold: float
+    ticker_quarters: list[str], fb_model, tokenizer, sf_model, threshold: float
 ) -> tuple[str, str]:
     """
     Run pipeline on all test transcripts, pick:
@@ -124,7 +139,7 @@ def pick_eyeball_transcripts(
         ect_path = _ECT_DIR / f"{tq}.txt"
         if not ect_path.exists():
             continue
-        results = run_on_transcript(ect_path, model, tokenizer, threshold)
+        results = run_on_transcript(ect_path, fb_model, tokenizer, sf_model, threshold)
         if not results:
             continue
 
@@ -147,8 +162,8 @@ def main() -> None:
     print("=== Stage 7 GUI Smoke Test ===\n")
 
     print("Loading winner model…")
-    model, tokenizer, threshold, winner_name = load_winner()
-    print(f"Winner: {winner_name}  threshold={threshold:.2f}\n")
+    fb_model, tokenizer, sf_model, threshold = load_winner()
+    print(f"Winner: finbert+setfit  threshold={threshold:.2f}\n")
 
     # Pick 1 random test transcript for smoke run
     ticker_quarters = get_test_ticker_quarters()
@@ -170,7 +185,7 @@ def main() -> None:
     print(f"Smoke transcript: {smoke_path.name}")
 
     t0 = time.perf_counter()
-    results = run_on_transcript(smoke_path, model, tokenizer, threshold)
+    results = run_on_transcript(smoke_path, fb_model, tokenizer, sf_model, threshold)
     elapsed = time.perf_counter() - t0
 
     total = len(results)
@@ -201,7 +216,9 @@ def main() -> None:
 
     # Eyeball picks
     print("Selecting eyeball picks across all test transcripts…")
-    bp_pick, qa_pick = pick_eyeball_transcripts(ticker_quarters, model, tokenizer, threshold)
+    bp_pick, qa_pick = pick_eyeball_transcripts(
+        ticker_quarters, fb_model, tokenizer, sf_model, threshold
+    )
 
     eyeball = {
         "description": "2 test-set transcripts for eyeball check",

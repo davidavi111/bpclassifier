@@ -1,7 +1,7 @@
 """app/streamlit_app.py — Boilerplate Classifier GUI (Stage 7).
 
 Inputs:  ECT/ dropdown, file upload (.txt), or paste textarea
-Pipeline: parse → sentence segmentation → FinBERT inference → threshold
+Pipeline: parse → sentence segmentation → FinBERT+SetFit ensemble inference → threshold
 Output:  inline transcript (boilerplate = red background) + stats panel
 """
 
@@ -43,10 +43,13 @@ st.set_page_config(
 
 # ─── Model loading (cached across reruns) ─────────────────────────────────────
 
+ENTITY = "david-avichzer-hebrew-university-of-jerusalem"
+PROJECT = "Boilerplate_Classifier"
 
-@st.cache_resource(show_spinner="Loading winner model from W&B (first run only)…")
+
+@st.cache_resource(show_spinner="Loading FinBERT+SetFit ensemble from W&B (first run only)…")
 def load_winner():
-    """Download winner FinBERT from W&B, load into memory. Cached."""
+    """Download FinBERT and SetFit from W&B, load into memory. Cached."""
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
     sys.path.insert(0, str(_ROOT / "scripts"))
@@ -54,30 +57,31 @@ def load_winner():
 
     get_wandb_key()
     import wandb  # noqa: PLC0415
+    from setfit import SetFitModel  # noqa: PLC0415
 
     with open(_EVAL_DIR / "confusion_matrix_test.json", encoding="utf-8") as fh:
         cfg = json.load(fh)
-    winner_name = cfg["winner"]
     threshold = float(cfg["threshold"])
 
     api = wandb.Api()
-    art = api.artifact(
-        f"david-avichzer-hebrew-university-of-jerusalem/"
-        f"Boilerplate_Classifier/model-{winner_name}:v0"
-    )
-    model_dir = Path(art.download())
 
-    tokenizer = AutoTokenizer.from_pretrained(str(model_dir))
-    model = AutoModelForSequenceClassification.from_pretrained(str(model_dir))
-    model.eval()
+    fb_art = api.artifact(f"{ENTITY}/{PROJECT}/model-finbert:v0")
+    fb_dir = Path(fb_art.download())
+    tokenizer = AutoTokenizer.from_pretrained(str(fb_dir))
+    fb_model = AutoModelForSequenceClassification.from_pretrained(str(fb_dir))
+    fb_model.eval()
 
-    return model, tokenizer, threshold, winner_name
+    sf_art = api.artifact(f"{ENTITY}/{PROJECT}/model-setfit:v0")
+    sf_dir = Path(sf_art.download())
+    sf_model = SetFitModel.from_pretrained(str(sf_dir))
+
+    return fb_model, tokenizer, sf_model, threshold
 
 
 # ─── Inference ────────────────────────────────────────────────────────────────
 
 
-def predict_proba(model, tokenizer, texts: list[str], batch_size: int = 32) -> np.ndarray:
+def _finbert_proba(fb_model, tokenizer, texts: list[str], batch_size: int = 32) -> np.ndarray:
     import torch
     import torch.nn.functional as F  # noqa: N812
 
@@ -88,13 +92,23 @@ def predict_proba(model, tokenizer, texts: list[str], batch_size: int = 32) -> n
             inputs = tokenizer(
                 batch, truncation=True, padding=True, max_length=128, return_tensors="pt"
             )
-            logits = model(**inputs).logits
+            logits = fb_model(**inputs).logits
             probs = F.softmax(logits, dim=-1)[:, 1].cpu().numpy()
             all_probs.extend(probs.tolist())
     return np.clip(np.array(all_probs, dtype=float), 0.0, 1.0)
 
 
-def run_pipeline(txt_path: Path, model, tokenizer, threshold: float) -> list[dict]:
+def predict_proba_ensemble(fb_model, tokenizer, sf_model, texts: list[str]) -> np.ndarray:
+    """Return mean of FinBERT and SetFit probabilities for substantive class."""
+    fb_probs = _finbert_proba(fb_model, tokenizer, texts)
+    raw = sf_model.predict_proba(texts)
+    sf_probs = np.clip(
+        raw.numpy() if hasattr(raw, "numpy") else np.array(raw, dtype=float), 0.0, 1.0
+    )[:, 1]
+    return 0.5 * fb_probs + 0.5 * sf_probs
+
+
+def run_pipeline(txt_path: Path, fb_model, tokenizer, sf_model, threshold: float) -> list[dict]:
     """Parse, segment, and label one transcript file. Returns list of sentence dicts."""
     transcript = parse_transcript(txt_path)
     sentences = transcript_to_sentences(transcript)
@@ -102,7 +116,7 @@ def run_pipeline(txt_path: Path, model, tokenizer, threshold: float) -> list[dic
         return []
 
     texts = [s.text for s in sentences]
-    probs = predict_proba(model, tokenizer, texts)
+    probs = predict_proba_ensemble(fb_model, tokenizer, sf_model, texts)
 
     return [
         {
@@ -115,12 +129,12 @@ def run_pipeline(txt_path: Path, model, tokenizer, threshold: float) -> list[dic
     ]
 
 
-def run_pipeline_raw(raw_text: str, model, tokenizer, threshold: float) -> list[dict]:
+def run_pipeline_raw(raw_text: str, fb_model, tokenizer, sf_model, threshold: float) -> list[dict]:
     """Tokenize unstructured pasted text and label it. Falls back when ECT parse fails."""
     sentences = [s for s in _tokenize_sentences(raw_text) if len(s) >= 40]
     if not sentences:
         return []
-    probs = predict_proba(model, tokenizer, sentences)
+    probs = predict_proba_ensemble(fb_model, tokenizer, sf_model, sentences)
     return [
         {
             "text": s,
@@ -284,17 +298,17 @@ def main() -> None:
         st.warning("Please select or paste a transcript first.")
         return
 
-    model, tokenizer, threshold, model_name = load_winner()
+    fb_model, tokenizer, sf_model, threshold = load_winner()
 
     with st.spinner("Running inference…"):
         t0 = time.perf_counter()
 
         if txt_path is not None:
             try:
-                results = run_pipeline(txt_path, model, tokenizer, threshold)
+                results = run_pipeline(txt_path, fb_model, tokenizer, sf_model, threshold)
             except TranscriptParseError:
                 raw_text = txt_path.read_text(encoding="utf-8-sig", errors="ignore")
-                results = run_pipeline_raw(raw_text, model, tokenizer, threshold)
+                results = run_pipeline_raw(raw_text, fb_model, tokenizer, sf_model, threshold)
         else:
             # Try ECT parse first (user may paste the full file contents)
             with tempfile.NamedTemporaryFile(
@@ -303,9 +317,9 @@ def main() -> None:
                 tmp.write(raw_text or "")
                 tmp_path = Path(tmp.name)
             try:
-                results = run_pipeline(tmp_path, model, tokenizer, threshold)
+                results = run_pipeline(tmp_path, fb_model, tokenizer, sf_model, threshold)
             except (TranscriptParseError, Exception):
-                results = run_pipeline_raw(raw_text or "", model, tokenizer, threshold)
+                results = run_pipeline_raw(raw_text or "", fb_model, tokenizer, sf_model, threshold)
 
         elapsed = time.perf_counter() - t0
 

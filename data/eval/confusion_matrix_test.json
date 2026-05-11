@@ -1,0 +1,11 @@
+{
+  "tn": 59,
+  "fp": 33,
+  "fn": 5,
+  "tp": 424,
+  "winner": "finbert+setfit",
+  "threshold": 0.16,
+  "test_macro_f1": 0.8567604329455345,
+  "test_substantive_recall": 0.9883449883449883,
+  "test_substantive_precision": 0.9277899343544858
+}

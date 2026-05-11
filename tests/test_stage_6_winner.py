@@ -43,8 +43,8 @@ def cm() -> dict:
     return json.loads(path.read_text())
 
 
-def test_leaderboard_has_8_rows(leaderboard: pd.DataFrame) -> None:
-    assert len(leaderboard) == 8, f"Expected 8 leaderboard rows, got {len(leaderboard)}"
+def test_leaderboard_has_at_least_8_rows(leaderboard: pd.DataFrame) -> None:
+    assert len(leaderboard) >= 8, f"Expected at least 8 leaderboard rows, got {len(leaderboard)}"
 
 
 def test_leaderboard_has_required_columns(leaderboard: pd.DataFrame) -> None:
